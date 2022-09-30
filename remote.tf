@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "tf-state-storage" {
-  bucket = "tf-remote-state.cryptern.${var.env}"
+  bucket = "tf-remote-state.${var.project_name}.${var.env}"
   versioning {
     enabled = true
   }
@@ -17,7 +17,7 @@ resource "aws_s3_bucket_public_access_block" "tf-state-storage" {
 }
 # create a dynamodb table for locking the state file
 resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
-  name           = "tf-remote-state-lock.cryptern.${var.env}"
+  name           = "tf-remote-state-lock.${var.project_name}.${var.env}"
   read_capacity  = 1
   write_capacity = 1
   hash_key       = "LockID"
